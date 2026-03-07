@@ -105,8 +105,20 @@ bot.on('contact', async (ctx) => {
     }
 });
 
-bot.launch().then(() => {
+// Error Handling for Polling Conflicts
+bot.catch((err, ctx) => {
+    console.error(`Bot Error:`, err);
+});
+
+// Prevent Node.js from exiting on unhandled rejection (which happens during Zero-Downtime overlapping bots)
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+bot.launch({ dropPendingUpdates: true }).then(() => {
     console.log('Bot is running...');
+}).catch((err) => {
+    console.error('Bot launch error:', err);
 });
 
 // Enable graceful stop
