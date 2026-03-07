@@ -1,10 +1,12 @@
 {
   "name": "fs-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Family Stay Booking App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npm install --prefix bot && npm install --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "node bot/index.js & npm start --prefix frontend"
   },
   "keywords": [],
   "author": "",

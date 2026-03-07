@@ -108,19 +108,6 @@ bot.launch().then(() => {
     console.log('Bot is running...');
 });
 
-// Create a dummy Express server to satisfy Render's port binding requirement
-const express = require('express');
-const app = express();
-
-app.get('/', (req, res) => {
-    res.send('Family Stay Bot is running!');
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Express server is listening on port ${PORT} for health checks.`);
-});
-
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
