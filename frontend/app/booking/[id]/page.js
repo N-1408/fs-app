@@ -94,15 +94,19 @@ export default function BookingDetailsPage({ params }) {
             <nav className="bottom-nav">
                 <Link href="/" className="nav-item">
                     <div>🏠</div>
+                    <span>Home</span>
                 </Link>
-                <div className="nav-item">
+                <Link href="/saved" className="nav-item">
                     <div>♡</div>
-                </div>
-                <div className="nav-item active">
-                    <div className="nav-icon-bg">🧳</div>
-                </div>
+                    <span>Saved</span>
+                </Link>
+                <Link href="/trips" className="nav-item">
+                    <div>🧳</div>
+                    <span>Trips</span>
+                </Link>
                 <Link href="/settings" className="nav-item">
                     <div>⚙️</div>
+                    <span>Profile</span>
                 </Link>
             </nav>
         </div>

@@ -12,17 +12,19 @@ import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
     const router = useRouter();
-    const [user, setUser] = useState({ name: 'Guest', phone: '+998 00 000 00 00' });
+    const [user, setUser] = useState({ name: 'Guest', phone: '+998 00 000 00 00', photo: '' });
 
     useEffect(() => {
         // Read dynamic user info passed by the Telegram Bot
         const savedName = localStorage.getItem('fs_user_name');
         const savedPhone = localStorage.getItem('fs_user_phone');
+        const savedPhoto = localStorage.getItem('fs_user_photo');
 
-        if (savedName || savedPhone) {
+        if (savedName || savedPhone || savedPhoto) {
             setUser({
                 name: savedName || 'Telegram User',
-                phone: savedPhone || 'Not provided'
+                phone: savedPhone || 'Not provided',
+                photo: savedPhoto || ''
             });
         }
     }, []);
@@ -36,12 +38,23 @@ export default function ProfilePage() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '16px' }}>
-                <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #60A5FA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', color: '#fff', fontWeight: 'bold', boxShadow: '0 8px 20px rgba(59,130,246,0.3)', position: 'relative' }}>
-                    {user.name.charAt(0).toUpperCase()}
+                <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #60A5FA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', color: '#fff', fontWeight: 'bold', boxShadow: '0 8px 20px rgba(59,130,246,0.3)', position: 'relative', overflow: 'visible' }}>
+                    {user.photo ?
+                        <img src={user.photo} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Profile" />
+                        : user.name.charAt(0).toUpperCase()}
                     <div style={{ position: 'absolute', bottom: 0, right: 0, background: '#fff', padding: '4px', borderRadius: '50%', border: '2px solid #F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>✏️</div>
                 </div>
                 <h2 style={{ fontSize: '22px', fontWeight: '700', marginTop: '16px' }}>{user.name}</h2>
                 <p style={{ color: '#64748B', fontSize: '15px', marginTop: '4px' }}>{user.phone}</p>
+            </div>
+
+            <div style={{ padding: '0 24px', marginTop: '16px' }}>
+                <div style={{ background: '#FEF2F2', border: '1px solid #FCA5A5', padding: '16px', borderRadius: '16px' }}>
+                    <p style={{ fontSize: '13px', color: '#991B1B', lineHeight: '1.5' }}>
+                        <strong>🚀 Demo Version Notice:</strong><br />
+                        This is a fully interactive minimal viable product (MVP) developed for the "Mirzo Ulug‘bek Vorislari" contest. Data visible here is mocked to represent the final Booking Application style and flows.
+                    </p>
+                </div>
             </div>
 
             <div style={{ padding: '0 24px', marginTop: '32px' }}>
@@ -90,15 +103,19 @@ export default function ProfilePage() {
             <nav className="bottom-nav">
                 <Link href="/" className="nav-item">
                     <div>🏠</div>
+                    <span>Home</span>
                 </Link>
-                <div className="nav-item">
+                <Link href="/saved" className="nav-item">
                     <div>♡</div>
-                </div>
-                <div className="nav-item">
+                    <span>Saved</span>
+                </Link>
+                <Link href="/trips" className="nav-item">
                     <div>🧳</div>
-                </div>
+                    <span>Trips</span>
+                </Link>
                 <Link href="/settings" className="nav-item active">
                     <div className="nav-icon-bg">⚙️</div>
+                    <span>Profile</span>
                 </Link>
             </nav>
         </div>

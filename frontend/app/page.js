@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 // 1. Add clear commenting with Emojis 🏠
@@ -6,7 +7,9 @@ import Link from 'next/link';
 //    - page.js (Home Screen - Bookify Style)
 //    - Created by AI (with User)
 //    - This file renders the redesigned light theme home screen with horizontal scrolling deals, categories, and property matches.
-//    - 2026-03-07 09:40 (Tashkent Time)
+//    - 2026-03-07 09:55 (Tashkent Time)
+// 3. ✨ Change log:
+//    - 2026-03-07 09:55 (Tashkent Time) - Integrated real Telegram profile photo and valid Bottom Nav links.
 
 const mockDeals = [
   { id: 1, title: 'Deals for Kuala Lumpur', sub: '19 - 20 Jun, 2 adults', bg: 'var(--accent-color)' },
@@ -39,6 +42,15 @@ const mockProperties = [
 ];
 
 export default function HomePage() {
+  const [userPhoto, setUserPhoto] = useState('/img/d.png'); // Fallback
+
+  useEffect(() => {
+    const photo = localStorage.getItem('fs_user_photo');
+    if (photo) {
+      setUserPhoto(photo);
+    }
+  }, []);
+
   return (
     <>
       <header className="header">
@@ -48,7 +60,7 @@ export default function HomePage() {
         <div className="header-icons">
           <div className="icon-btn">🔔</div>
           <div className="icon-btn" style={{ overflow: 'hidden' }}>
-            <img src="/img/d.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Profile" />
+            <img src={userPhoto} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Profile" />
           </div>
         </div>
       </header>
@@ -126,14 +138,14 @@ export default function HomePage() {
           <div className="nav-icon-bg">🏠</div>
           <span>Home</span>
         </Link>
-        <div className="nav-item">
+        <Link href="/saved" className="nav-item">
           <div>♡</div>
           <span>Saved</span>
-        </div>
-        <div className="nav-item">
+        </Link>
+        <Link href="/trips" className="nav-item">
           <div>🧳</div>
           <span>Trips</span>
-        </div>
+        </Link>
         <Link href="/settings" className="nav-item">
           <div>⚙️</div>
           <span>Profile</span>
