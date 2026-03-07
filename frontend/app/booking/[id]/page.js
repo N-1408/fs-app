@@ -1,62 +1,110 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // 1. Add clear commenting with Emojis 📅
 // 2. Add 3 things into every coding file you create
-//    - booking/[id]/page.js (Booking Page Details)
+//    - booking/[id]/page.js (Booking Details - Bookify Style)
 //    - Created by AI (with User)
-//    - This file renders the single property details view and allows the user to mock a booking.
-//    - 2026-03-07 08:52 (Tashkent Time)
+//    - This file renders the details of a booking, matching the clean Light Theme "Bookify" Booking details screen. It includes tabs and manager contact options.
+//    - 2026-03-07 09:44 (Tashkent Time)
 
-export default function BookingPage({ params }) {
-    // Mock property data based on params.id
+export default function BookingDetailsPage({ params }) {
+    const router = useRouter();
+    const [activeTab, setActiveTab] = useState('Active');
+
+    const tabs = ['Active', 'Past', 'Cancelled'];
+
     return (
-        <>
-            <div className="property-image" style={{ backgroundImage: `url('/img/thumb_1470_600_0_0_0_auto.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', height: '300px' }}>
-                <Link href="/" style={{ position: 'absolute', top: 20, left: 20, background: 'rgba(0,0,0,0.5)', padding: '8px 16px', borderRadius: 20, color: 'white', backdropFilter: 'blur(5px)' }}>
-                    ← Back
-                </Link>
+        <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
+            <div style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div onClick={() => router.back()} className="icon-btn" style={{ cursor: 'pointer' }}>{"<"}</div>
+                <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Booking Details</h2>
+                <div className="icon-btn" style={{ cursor: 'pointer' }}>{"+"}</div>
             </div>
 
-            <div style={{ padding: '24px', paddingBottom: '100px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>Grand Retreat House</h1>
-                    <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#3B82F6' }}>$200/night</span>
-                </div>
+            <div style={{ display: 'flex', gap: '8px', padding: '0 24px 16px', justifyContent: 'center' }}>
+                {tabs.map(tab => (
+                    <div
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        style={{
+                            padding: '10px 24px',
+                            borderRadius: '24px',
+                            fontSize: '14px',
+                            fontWeight: '500',
+                            cursor: 'pointer',
+                            background: activeTab === tab ? '#DBEAFE' : '#FFFFFF',
+                            color: activeTab === tab ? '#2563EB' : '#64748B',
+                            border: '1px solid #E2E8F0',
+                            flex: 1,
+                            textAlign: 'center'
+                        }}
+                    >
+                        {tab}
+                    </div>
+                ))}
+            </div>
 
-                <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
-                    <span style={{ background: '#232730', padding: '6px 12px', borderRadius: '8px', fontSize: '14px', color: '#94A3B8' }}>🏠 House</span>
-                    <span style={{ background: '#232730', padding: '6px 12px', borderRadius: '8px', fontSize: '14px', color: '#94A3B8' }}>👥 8-10 guests</span>
-                    <span style={{ background: '#232730', padding: '6px 12px', borderRadius: '8px', fontSize: '14px', color: '#94A3B8' }}>⭐ 4.9</span>
-                </div>
+            <div style={{ padding: '0 24px 100px' }}>
+                <div style={{ background: '#FFFFFF', borderRadius: '32px', padding: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #E2E8F0' }}>
 
-                <div style={{ marginTop: '24px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>About Property</h3>
-                    <p style={{ color: '#94A3B8', fontSize: '15px', lineHeight: '1.6' }}>
-                        Perfect choice for large families or tourist groups up to 10 people. Fully equipped kitchen, multiple bathrooms, and a cozy atmosphere that makes you feel at home.
-                    </p>
-                </div>
+                    <div style={{ height: '200px', borderRadius: '24px', background: `url('/img/thumb_3993_600_0_0_0_auto.jpg') center/cover`, position: 'relative' }}>
+                        <div className="hotel-rating" style={{ top: 16, left: 16 }}>⭐ 4.9</div>
+                    </div>
 
-                <div style={{ marginTop: '32px' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px' }}>Select Dates</h3>
-                    <div style={{ display: 'flex', gap: '16px' }}>
-                        <div style={{ flex: 1, background: '#1A1D24', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                            <p style={{ fontSize: '12px', color: '#94A3B8' }}>Check in</p>
-                            <p style={{ fontSize: '16px', fontWeight: '500', marginTop: '4px' }}>Oct 15, 2026</p>
+                    <div style={{ marginTop: '20px', padding: '0 8px' }}>
+                        <h3 style={{ fontSize: '20px', fontWeight: '700' }}>Luxury Hotel & Vacation Suites</h3>
+                        <p style={{ color: '#64748B', fontSize: '14px', marginTop: '6px' }}>📍 The Ritz London, Piccadilly</p>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '12px', marginTop: '24px', alignItems: 'center' }}>
+                        <div style={{ flex: 1, background: '#F8FAFC', borderRadius: '20px', padding: '16px' }}>
+                            <div style={{ fontSize: '13px', color: '#64748B' }}>Check In</div>
+                            <div style={{ fontSize: '16px', fontWeight: '600', marginTop: '4px' }}>10 Jan, 2026</div>
+                            <div style={{ fontSize: '13px', color: '#64748B', marginTop: '4px' }}>16:00pm</div>
                         </div>
-                        <div style={{ flex: 1, background: '#1A1D24', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                            <p style={{ fontSize: '12px', color: '#94A3B8' }}>Check out</p>
-                            <p style={{ fontSize: '16px', fontWeight: '500', marginTop: '4px' }}>Oct 20, 2026</p>
+                        <div style={{ color: '#64748B', background: '#F8FAFC', padding: '12px', borderRadius: '50%' }}>➔</div>
+                        <div style={{ flex: 1, background: '#F8FAFC', borderRadius: '20px', padding: '16px' }}>
+                            <div style={{ fontSize: '13px', color: '#64748B' }}>Check out</div>
+                            <div style={{ fontSize: '16px', fontWeight: '600', marginTop: '4px' }}>15 Jan, 2026</div>
+                            <div style={{ fontSize: '13px', color: '#64748B', marginTop: '4px' }}>16:00pm</div>
                         </div>
                     </div>
+
+                    <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '16px', padding: '0 8px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', paddingBottom: '16px', borderBottom: '1px solid #E2E8F0' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#64748B', fontWeight: '500' }}>
+                                <span>📞</span> Call Home Manager
+                            </div>
+                            <div style={{ color: '#64748B' }}>➔</div>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', paddingBottom: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#64748B', fontWeight: '500' }}>
+                                <span>💬</span> Message Home Manager
+                            </div>
+                            <div style={{ color: '#64748B' }}>➔</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: '480px', background: 'rgba(26,29,36,0.95)', padding: '20px', borderTop: '1px solid rgba(255,255,255,0.1)', zIndex: 100 }}>
-                <button style={{ width: '100%', background: '#3B82F6', color: 'white', border: 'none', padding: '16px', borderRadius: '12px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)' }}>
-                    Book Now - $1000 Total
-                </button>
-            </div>
-        </>
+            <nav className="bottom-nav">
+                <Link href="/" className="nav-item">
+                    <div>🏠</div>
+                </Link>
+                <div className="nav-item">
+                    <div>♡</div>
+                </div>
+                <div className="nav-item active">
+                    <div className="nav-icon-bg">🧳</div>
+                </div>
+                <Link href="/settings" className="nav-item">
+                    <div>⚙️</div>
+                </Link>
+            </nav>
+        </div>
     );
 }

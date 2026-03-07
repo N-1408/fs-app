@@ -3,37 +3,37 @@ import Link from 'next/link';
 
 // 1. Add clear commenting with Emojis 🏠
 // 2. Add 3 things into every coding file you create
-//    - page.js (Main Landing Page for Property List)
+//    - page.js (Home Screen - Bookify Style)
 //    - Created by AI (with User)
-//    - This file renders the main discovery view where users can see available apartments and houses. It uses mock data to represent properties.
-//    - 2026-03-07 08:50 (Tashkent Time)
+//    - This file renders the redesigned light theme home screen with horizontal scrolling deals, categories, and property matches.
+//    - 2026-03-07 09:40 (Tashkent Time)
+
+const mockDeals = [
+  { id: 1, title: 'Deals for Kuala Lumpur', sub: '19 - 20 Jun, 2 adults', bg: 'var(--accent-color)' },
+  { id: 2, title: 'Summer in Tashkent', sub: 'July Offers', bg: '#4ade80' }
+];
+
+const mockExplore = [
+  { id: 1, title: 'Tower Bridge Suite', img: '/img/thumb_3960_600_0_0_0_auto.jpg' },
+  { id: 2, title: 'Nature Resorts', img: '/img/thumb_1470_600_0_0_0_auto.jpg' },
+  { id: 3, title: 'Family Villas', img: '/img/thumb_1116_600_0_0_0_auto.jpg' }
+];
 
 const mockProperties = [
   {
     id: 1,
-    title: 'Family Apartment Oasis',
-    type: 'Apartment',
-    capacity: '6-8',
-    price: '$120',
-    image: '/img/thumb_1116_600_0_0_0_auto.jpg',
-    rating: 4.8
+    title: 'Luxury Hotel & Vacation Suites',
+    loc: 'The Ritz London, Piccadilly',
+    price: '$450',
+    image: '/img/thumb_3993_600_0_0_0_auto.jpg',
+    rating: 4.9
   },
   {
     id: 2,
     title: 'Grand Retreat House',
-    type: 'House',
-    capacity: '8-10',
+    loc: 'Tashkent City Center',
     price: '$200',
-    image: '/img/thumb_1470_600_0_0_0_auto.jpg',
-    rating: 4.9
-  },
-  {
-    id: 3,
-    title: 'Nature View Villa',
-    type: 'House',
-    capacity: '10-12',
-    price: '$250',
-    image: '/img/thumb_3960_600_0_0_0_auto.jpg',
+    image: '/img/thumb_4026_600_0_0_0_auto.jpg',
     rating: 5.0
   }
 ];
@@ -43,52 +43,100 @@ export default function HomePage() {
     <>
       <header className="header">
         <div className="header-title">
-          <h1>Family Stay</h1>
-          <p>Find your perfect space 🌟</p>
+          <h1>Bookify</h1>
         </div>
-        <div className="header-avatar" style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #2563EB)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#fff', fontWeight: 600 }}>
-          M
+        <div className="header-icons">
+          <div className="icon-btn">🔔</div>
+          <div className="icon-btn" style={{ overflow: 'hidden' }}>
+            <img src="/img/d.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Profile" />
+          </div>
         </div>
       </header>
 
-      <main className="property-list">
-        {mockProperties.map((prop, idx) => (
-          <Link href={`/booking/${prop.id}`} key={prop.id} className="property-card" style={{ animationDelay: `${idx * 0.1}s`, display: 'block', textDecoration: 'none' }}>
-            <div className="property-image" style={{ backgroundImage: `url('${prop.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-              <span className="property-tag">{prop.type}</span>
-            </div>
+      <div className="search-container">
+        <div className="search-input">
+          <span>🔍</span>
+          <input type="text" placeholder="Search here..." />
+        </div>
+        <div className="icon-btn">⚙️</div>
+      </div>
 
-            <div className="property-details">
-              <h3 className="property-title">{prop.title}</h3>
-              <div className="property-info">
-                <span className="property-info-item">
-                  👥 {prop.capacity} guests
-                </span>
-                <span className="property-info-item" style={{ marginLeft: 'auto', color: '#FCD34D' }}>
-                  ⭐ {prop.rating}
-                </span>
+      <div className="categories-scroll">
+        <div className="category-pill active">🛏️ Stays</div>
+        <div className="category-pill">✈️ Flights</div>
+        <div className="category-pill">🚗 Cars</div>
+        <div className="category-pill">🏛️ Attractions</div>
+      </div>
+
+      <div className="horizontal-scroll" style={{ marginTop: '16px' }}>
+        {mockDeals.map(deal => (
+          <div key={deal.id} className="featured-card" style={{ background: deal.bg }}>
+            <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>{deal.title}</h3>
+            <p style={{ fontSize: '13px', marginTop: '8px', opacity: 0.9 }}>{deal.sub}</p>
+            <div className="featured-btn">See deals</div>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="section-title">Explore more, save more</h2>
+      <div className="horizontal-scroll">
+        {mockExplore.map(item => (
+          <div key={item.id} className="explore-card" style={{ backgroundImage: `url('${item.img}')` }}>
+            <div className="explore-card-title">{item.title}</div>
+            <div style={{ position: 'absolute', top: 12, right: 12, color: 'white' }}>♡</div>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="section-title">Need ideas ➔</h2>
+      <div className="horizontal-scroll">
+        {mockExplore.slice(1).map(item => (
+          <div key={item.id} className="explore-card" style={{ backgroundImage: `url('${item.img}')`, minWidth: '140px', height: '160px' }}>
+            <div className="hotel-rating" style={{ top: 8, left: 8, padding: '2px 6px', fontSize: 10 }}>⭐ 5.0</div>
+            <div style={{ position: 'absolute', bottom: 12, left: 12, color: 'white', fontWeight: 600, fontSize: 12, textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+              📍 {item.title}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="section-title">Weekend Special Offers</h2>
+      <div className="standard-list">
+        {mockProperties.map(prop => (
+          <Link href={`/booking/${prop.id}`} key={prop.id} className="hotel-card">
+            <div className="hotel-img" style={{ backgroundImage: `url('${prop.image}')` }}>
+              <div className="hotel-rating">⭐ {prop.rating}</div>
+            </div>
+            <div className="hotel-info">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <h3 className="hotel-name">{prop.title}</h3>
+                <span style={{ color: '#64748B' }}>♡</span>
               </div>
-              <div className="property-price">
-                <span className="price-amount">{prop.price}</span>
-                <span className="price-period">/ night</span>
+              <p className="hotel-loc">📍 {prop.loc}</p>
+              <div className="hotel-price">
+                <strong>{prop.price}</strong> <span style={{ color: '#64748B' }}>night</span>
               </div>
             </div>
           </Link>
         ))}
-      </main>
+      </div>
 
       <nav className="bottom-nav">
         <Link href="/" className="nav-item active">
-          <span>🏠</span>
-          Discover
+          <div className="nav-icon-bg">🏠</div>
+          <span>Home</span>
         </Link>
         <div className="nav-item">
-          <span>❤️</span>
-          Saved
+          <div>♡</div>
+          <span>Saved</span>
+        </div>
+        <div className="nav-item">
+          <div>🧳</div>
+          <span>Trips</span>
         </div>
         <Link href="/settings" className="nav-item">
-          <span>⚙️</span>
-          Settings
+          <div>⚙️</div>
+          <span>Profile</span>
         </Link>
       </nav>
     </>

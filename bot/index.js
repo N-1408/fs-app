@@ -89,9 +89,16 @@ bot.on('contact', async (ctx) => {
             }
         });
 
+        const queryParams = new URLSearchParams({
+            name: state.name || '',
+            phone: state.phone || ''
+        }).toString();
+
+        const finalWebAppUrl = `${WEB_APP_URL}?${queryParams}`;
+
         return ctx.reply('Family Stay App:',
             Markup.inlineKeyboard([
-                Markup.button.webApp(i18n[lang].openWebApp, WEB_APP_URL)
+                Markup.button.webApp(i18n[lang].openWebApp, finalWebAppUrl)
             ])
         );
     }
