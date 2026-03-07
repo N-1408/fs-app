@@ -2,16 +2,18 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '../../i18n';
 
 // 1. Add clear commenting with Emojis 📅
-// 2. Add 3 things into every coding file you create
+// 2. Add 3 transition things into every coding file you create
 //    - booking/[id]/page.js (Booking Details - Bookify Style)
 //    - Created by AI (with User)
 //    - This file renders the details of a booking, matching the clean Light Theme "Bookify" Booking details screen. It includes tabs and manager contact options.
-//    - 2026-03-07 09:44 (Tashkent Time)
+//    - 2026-03-07 10:20 (Tashkent Time)
 
 export default function BookingDetailsPage({ params }) {
     const router = useRouter();
+    const t = useTranslation();
     const [activeTab, setActiveTab] = useState('Active');
 
     const tabs = ['Active', 'Past', 'Cancelled'];
@@ -20,7 +22,7 @@ export default function BookingDetailsPage({ params }) {
         <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
             <div style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div onClick={() => router.back()} className="icon-btn" style={{ cursor: 'pointer' }}>{"<"}</div>
-                <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Booking Details</h2>
+                <h2 style={{ fontSize: '18px', fontWeight: '600' }}>{t.booking.title}</h2>
                 <div className="icon-btn" style={{ cursor: 'pointer' }}>{"+"}</div>
             </div>
 
@@ -42,7 +44,7 @@ export default function BookingDetailsPage({ params }) {
                             textAlign: 'center'
                         }}
                     >
-                        {tab}
+                        {t.trips.tabs[tab] || tab}
                     </div>
                 ))}
             </div>
@@ -61,13 +63,13 @@ export default function BookingDetailsPage({ params }) {
 
                     <div style={{ display: 'flex', gap: '12px', marginTop: '24px', alignItems: 'center' }}>
                         <div style={{ flex: 1, background: '#F8FAFC', borderRadius: '20px', padding: '16px' }}>
-                            <div style={{ fontSize: '13px', color: '#64748B' }}>Check In</div>
+                            <div style={{ fontSize: '13px', color: '#64748B' }}>{t.booking.checkIn}</div>
                             <div style={{ fontSize: '16px', fontWeight: '600', marginTop: '4px' }}>10 Jan, 2026</div>
                             <div style={{ fontSize: '13px', color: '#64748B', marginTop: '4px' }}>16:00pm</div>
                         </div>
                         <div style={{ color: '#64748B', background: '#F8FAFC', padding: '12px', borderRadius: '50%' }}>➔</div>
                         <div style={{ flex: 1, background: '#F8FAFC', borderRadius: '20px', padding: '16px' }}>
-                            <div style={{ fontSize: '13px', color: '#64748B' }}>Check out</div>
+                            <div style={{ fontSize: '13px', color: '#64748B' }}>{t.booking.checkOut}</div>
                             <div style={{ fontSize: '16px', fontWeight: '600', marginTop: '4px' }}>15 Jan, 2026</div>
                             <div style={{ fontSize: '13px', color: '#64748B', marginTop: '4px' }}>16:00pm</div>
                         </div>
@@ -76,13 +78,13 @@ export default function BookingDetailsPage({ params }) {
                     <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '16px', padding: '0 8px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', paddingBottom: '16px', borderBottom: '1px solid #E2E8F0' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#64748B', fontWeight: '500' }}>
-                                <span>📞</span> Call Home Manager
+                                <span>📞</span> {t.booking.callManager}
                             </div>
                             <div style={{ color: '#64748B' }}>➔</div>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', paddingBottom: '8px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#64748B', fontWeight: '500' }}>
-                                <span>💬</span> Message Home Manager
+                                <span>💬</span> {t.booking.messageManager}
                             </div>
                             <div style={{ color: '#64748B' }}>➔</div>
                         </div>
@@ -94,19 +96,19 @@ export default function BookingDetailsPage({ params }) {
             <nav className="bottom-nav">
                 <Link href="/" className="nav-item">
                     <div>🏠</div>
-                    <span>Home</span>
+                    <span>{t.nav.home}</span>
                 </Link>
                 <Link href="/saved" className="nav-item">
                     <div>♡</div>
-                    <span>Saved</span>
+                    <span>{t.nav.saved}</span>
                 </Link>
                 <Link href="/trips" className="nav-item">
                     <div>🧳</div>
-                    <span>Trips</span>
+                    <span>{t.nav.trips}</span>
                 </Link>
                 <Link href="/settings" className="nav-item">
                     <div>⚙️</div>
-                    <span>Profile</span>
+                    <span>{t.nav.profile}</span>
                 </Link>
             </nav>
         </div>

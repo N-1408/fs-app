@@ -41,8 +41,11 @@ const mockProperties = [
   }
 ];
 
+import { useTranslation } from './i18n';
+
 export default function HomePage() {
   const [userPhoto, setUserPhoto] = useState('/img/d.png'); // Fallback
+  const t = useTranslation();
 
   useEffect(() => {
     const photo = localStorage.getItem('fs_user_photo');
@@ -53,69 +56,71 @@ export default function HomePage() {
 
   return (
     <>
-      <header className="header">
+      <header className="header" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <div className="header-title">
-          <h1>Bookify</h1>
+          <h1>{t.appName}</h1>
         </div>
         <div className="header-icons">
-          <div className="icon-btn">🔔</div>
-          <div className="icon-btn" style={{ overflow: 'hidden' }}>
+          <div className="icon-btn" style={{ cursor: 'pointer' }}>🔔</div>
+          <Link href="/settings" className="icon-btn" style={{ overflow: 'hidden', cursor: 'pointer' }}>
             <img src={userPhoto} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Profile" />
-          </div>
+          </Link>
         </div>
       </header>
 
       <div className="search-container">
         <div className="search-input">
           <span>🔍</span>
-          <input type="text" placeholder="Search here..." />
+          <input type="text" placeholder={t.searchPlaceholder} />
         </div>
-        <div className="icon-btn">⚙️</div>
+        {/* Settings gear icon was intentionally removed here based on user request */}
       </div>
 
       <div className="categories-scroll">
-        <div className="category-pill active">🛏️ Stays</div>
-        <div className="category-pill">✈️ Flights</div>
-        <div className="category-pill">🚗 Cars</div>
-        <div className="category-pill">🏛️ Attractions</div>
+        <div className="category-pill active">🛏️ {t.cats.stays}</div>
+        <div className="category-pill">✈️ {t.cats.flights}</div>
+        <div className="category-pill">🚗 {t.cats.cars}</div>
+        <div className="category-pill">🏛️ {t.cats.attractions}</div>
       </div>
 
       <div className="horizontal-scroll" style={{ marginTop: '16px' }}>
         {mockDeals.map(deal => (
-          <div key={deal.id} className="featured-card" style={{ background: deal.bg }}>
+          <div key={deal.id} className="featured-card" style={{ background: deal.bg, display: 'flex', flexDirection: 'column' }}>
             <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>{deal.title}</h3>
             <p style={{ fontSize: '13px', marginTop: '8px', opacity: 0.9 }}>{deal.sub}</p>
-            <div className="featured-btn">See deals</div>
-          </div>
-        ))}
-      </div>
-
-      <h2 className="section-title">Explore more, save more</h2>
-      <div className="horizontal-scroll">
-        {mockExplore.map(item => (
-          <div key={item.id} className="explore-card" style={{ backgroundImage: `url('${item.img}')` }}>
-            <div className="explore-card-title">{item.title}</div>
-            <div style={{ position: 'absolute', top: 12, right: 12, color: 'white' }}>♡</div>
-          </div>
-        ))}
-      </div>
-
-      <h2 className="section-title">Need ideas ➔</h2>
-      <div className="horizontal-scroll">
-        {mockExplore.slice(1).map(item => (
-          <div key={item.id} className="explore-card" style={{ backgroundImage: `url('${item.img}')`, minWidth: '140px', height: '160px' }}>
-            <div className="hotel-rating" style={{ top: 8, left: 8, padding: '2px 6px', fontSize: 10 }}>⭐ 5.0</div>
-            <div style={{ position: 'absolute', bottom: 12, left: 12, color: 'white', fontWeight: 600, fontSize: 12, textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
-              📍 {item.title}
+            <div style={{ marginTop: 'auto' }}>
+              <Link href="/trips" className="featured-btn" style={{ cursor: 'pointer', display: 'inline-block' }}>{t.deals}</Link>
             </div>
           </div>
         ))}
       </div>
 
-      <h2 className="section-title">Weekend Special Offers</h2>
+      <h2 className="section-title">{t.explore}</h2>
+      <div className="horizontal-scroll">
+        {mockExplore.map(item => (
+          <Link href={`/booking/1`} key={item.id} className="explore-card" style={{ backgroundImage: `url('${item.img}')`, cursor: 'pointer' }}>
+            <div className="explore-card-title">{item.title}</div>
+            <div style={{ position: 'absolute', top: 12, right: 12, color: 'white' }}>♡</div>
+          </Link>
+        ))}
+      </div>
+
+      <h2 className="section-title">{t.ideas}</h2>
+      <div className="horizontal-scroll">
+        {mockExplore.slice(1).map(item => (
+          <Link href={`/booking/2`} key={item.id} className="explore-card" style={{ backgroundImage: `url('${item.img}')`, minWidth: '140px', height: '160px', cursor: 'pointer' }}>
+            <div className="hotel-rating" style={{ top: 8, left: 8, padding: '2px 6px', fontSize: 10 }}>⭐ 5.0</div>
+            <div style={{ position: 'absolute', bottom: 12, left: 12, color: 'white', fontWeight: 600, fontSize: 12, textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+              📍 {item.title}
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <h2 className="section-title">{t.weekend}</h2>
       <div className="standard-list">
         {mockProperties.map(prop => (
-          <Link href={`/booking/${prop.id}`} key={prop.id} className="hotel-card">
+          <Link href={`/booking/${prop.id}`} key={prop.id} className="hotel-card" style={{ cursor: 'pointer' }}>
             <div className="hotel-img" style={{ backgroundImage: `url('${prop.image}')` }}>
               <div className="hotel-rating">⭐ {prop.rating}</div>
             </div>
@@ -126,7 +131,7 @@ export default function HomePage() {
               </div>
               <p className="hotel-loc">📍 {prop.loc}</p>
               <div className="hotel-price">
-                <strong>{prop.price}</strong> <span style={{ color: '#64748B' }}>night</span>
+                <strong>{prop.price}</strong> <span style={{ color: '#64748B' }}>{t.night}</span>
               </div>
             </div>
           </Link>
@@ -136,19 +141,19 @@ export default function HomePage() {
       <nav className="bottom-nav">
         <Link href="/" className="nav-item active">
           <div className="nav-icon-bg">🏠</div>
-          <span>Home</span>
+          <span>{t.nav.home}</span>
         </Link>
         <Link href="/saved" className="nav-item">
           <div>♡</div>
-          <span>Saved</span>
+          <span>{t.nav.saved}</span>
         </Link>
         <Link href="/trips" className="nav-item">
           <div>🧳</div>
-          <span>Trips</span>
+          <span>{t.nav.trips}</span>
         </Link>
         <Link href="/settings" className="nav-item">
           <div>⚙️</div>
-          <span>Profile</span>
+          <span>{t.nav.profile}</span>
         </Link>
       </nav>
     </>

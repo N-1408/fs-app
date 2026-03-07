@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '../i18n';
 
 // 1. Add clear commenting with Emojis 🧳
 // 2. Add 3 things into every coding file you create
 //    - trips/page.js (Trips / My Bookings Page)
 //    - Created by AI (with User)
 //    - This file renders the list of Active and Past trips for the user to make the demo realistic.
-//    - 2026-03-07 09:50 (Tashkent Time)
+//    - 2026-03-07 10:20 (Tashkent Time)
 
 const mockTrips = [
     {
@@ -31,16 +32,17 @@ const mockTrips = [
 
 export default function TripsPage() {
     const router = useRouter();
+    const t = useTranslation();
     const [activeTab, setActiveTab] = useState('Active');
 
-    const filteredTrips = mockTrips.filter(t => t.status === activeTab);
+    const filteredTrips = mockTrips.filter(trip => trip.status === activeTab);
 
     return (
         <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
             <header className="header" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.02)', position: 'sticky', top: 0, background: '#F8FAFC', zIndex: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <div onClick={() => router.back()} className="icon-btn" style={{ cursor: 'pointer' }}>{"<"}</div>
-                    <h1 style={{ fontSize: '20px', fontWeight: 'bold', color: '#0F172A' }}>My Trips</h1>
+                    <h1 style={{ fontSize: '20px', fontWeight: 'bold', color: '#0F172A' }}>{t.trips.title}</h1>
                 </div>
             </header>
 
@@ -62,7 +64,7 @@ export default function TripsPage() {
                             textAlign: 'center'
                         }}
                     >
-                        {tab}
+                        {t.trips.tabs[tab] || tab}
                     </div>
                 ))}
             </div>
@@ -71,7 +73,7 @@ export default function TripsPage() {
                 {filteredTrips.length === 0 ? (
                     <div style={{ textAlign: 'center', color: '#64748B', marginTop: '40px' }}>
                         <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏕️</div>
-                        <p>No {activeTab.toLowerCase()} trips found.</p>
+                        <p>{t.trips.empty.replace('{status}', t.trips.tabs[activeTab] || activeTab)}</p>
                     </div>
                 ) : (
                     filteredTrips.map((trip, idx) => (
@@ -90,19 +92,19 @@ export default function TripsPage() {
             <nav className="bottom-nav">
                 <Link href="/" className="nav-item">
                     <div>🏠</div>
-                    <span>Home</span>
+                    <span>{t.nav.home}</span>
                 </Link>
                 <Link href="/saved" className="nav-item">
                     <div>♡</div>
-                    <span>Saved</span>
+                    <span>{t.nav.saved}</span>
                 </Link>
                 <Link href="/trips" className="nav-item active">
                     <div className="nav-icon-bg">🧳</div>
-                    <span>Trips</span>
+                    <span>{t.nav.trips}</span>
                 </Link>
                 <Link href="/settings" className="nav-item">
                     <div>⚙️</div>
-                    <span>Profile</span>
+                    <span>{t.nav.profile}</span>
                 </Link>
             </nav>
         </div>

@@ -91,7 +91,8 @@ bot.on('contact', async (ctx) => {
 
         const queryParams = new URLSearchParams({
             name: state.name || '',
-            phone: state.phone || ''
+            phone: state.phone || '',
+            lang: state.lang || 'uz'
         }).toString();
 
         const finalWebAppUrl = `${WEB_APP_URL}?${queryParams}`;

@@ -31,8 +31,13 @@ export default function TelegramInit() {
         // Fallback URL query parameters (for phone which is not in initDataUnsafe without permissions)
         const params = new URLSearchParams(window.location.search);
         const phoneStr = params.get('phone');
+        const langStr = params.get('lang');
+
         if (phoneStr) {
             localStorage.setItem('fs_user_phone', phoneStr);
+        }
+        if (langStr) {
+            localStorage.setItem('fs_user_lang', langStr);
         }
     }, []);
 
