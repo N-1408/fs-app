@@ -117,6 +117,15 @@ process.on('unhandledRejection', (reason, promise) => {
 
 bot.launch({ dropPendingUpdates: true }).then(() => {
     console.log('Bot is running...');
+
+    // Render Free Tier Keep-Alive Pinger (Pings every 10 minutes)
+    const renderUrl = 'https://family-stay-bot.onrender.com';
+    setInterval(() => {
+        fetch(renderUrl)
+            .then(res => console.log(`[Keep-Alive] Pinged ${renderUrl} - Status: ${res.status}`))
+            .catch(err => console.error(`[Keep-Alive] Ping failed:`, err.message));
+    }, 10 * 60 * 1000); // 10 minutes
+
 }).catch((err) => {
     console.error('Bot launch error:', err);
 });
