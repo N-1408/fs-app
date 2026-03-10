@@ -11,6 +11,10 @@ import { useTranslation } from '../../i18n';
 //    - This file renders the details of a booking, matching the clean Light Theme "Bookify" Booking details screen. It includes tabs and manager contact options.
 //    - 2026-03-07 10:20 (Tashkent Time)
 
+export function generateStaticParams() {
+    return [{ id: '1' }, { id: '2' }, { id: '3' }];
+}
+
 export default function BookingDetailsPage({ params }) {
     const router = useRouter();
     const t = useTranslation();
