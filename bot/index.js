@@ -115,16 +115,28 @@ process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send('Family Stay Bot is running!');
+});
+
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+    console.log(`Express server is listening on port ${PORT} for health checks.`);
+});
+
 bot.launch({ dropPendingUpdates: true }).then(() => {
     console.log('Bot is running...');
 
-    // Render Free Tier Keep-Alive Pinger (Pings every 10 minutes)
+    // Render Free Tier Keep-Alive Pinger (Pings every 5 minutes)
     const renderUrl = 'https://family-stay-bot.onrender.com';
     setInterval(() => {
         fetch(renderUrl)
             .then(res => console.log(`[Keep-Alive] Pinged ${renderUrl} - Status: ${res.status}`))
             .catch(err => console.error(`[Keep-Alive] Ping failed:`, err.message));
-    }, 10 * 60 * 1000); // 10 minutes
+    }, 5 * 60 * 1000); // 5 minutes
 
 }).catch((err) => {
     console.error('Bot launch error:', err);
